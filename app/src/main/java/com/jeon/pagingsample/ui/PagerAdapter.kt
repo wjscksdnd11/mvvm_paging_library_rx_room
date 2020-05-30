@@ -1,4 +1,4 @@
-package com.jeon.pagingsample
+package com.jeon.pagingsample.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -6,13 +6,15 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class PagerAdapter (fragmentManager: FragmentManager): FragmentStatePagerAdapter(fragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    val tabTitles = arrayOf("리스트","즐겨찾기")
+    private val tabTitles = arrayOf("리스트","즐겨찾기")
     companion object{
         const val MAIN_TAB_POSITON = 0
     }
     override fun getItem(position: Int): Fragment {
-        if(MAIN_TAB_POSITON==position){
-
+        return if(MAIN_TAB_POSITON ==position){
+            MainFragment.newInstance()
+        }else {
+            LikeFragment.newInstance()
         }
     }
 
@@ -21,6 +23,6 @@ class PagerAdapter (fragmentManager: FragmentManager): FragmentStatePagerAdapter
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return super.getPageTitle(position)
+        return tabTitles[position]
     }
 }

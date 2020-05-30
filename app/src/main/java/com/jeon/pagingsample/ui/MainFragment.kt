@@ -1,12 +1,11 @@
-package com.jeon.pagingsample
+package com.jeon.pagingsample.ui
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.jeon.pagingsample.R
 
 
 class MainFragment : Fragment() {
@@ -19,22 +18,9 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-    }
-
-
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-
-            }
+        fun newInstance() =
+            MainFragment()
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="?attr/colorPrimary"
+    app:contentPadding="13dp"
+    android:elevation="2dp"
+    tools:targetApi="lollipop">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_main_name"
+            android:textColor="?attr/textDefaultColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceLarge"
+            tools:text="내 집 같은 편안한 여기어때 숙소"/>
+
+        <TextView
+            android:id="@+id/tv_main_price"
+            android:textColor="?attr/textDefaultColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceListItem"
+            tools:text="150000"/>
+
+        <ImageView
+            android:id="@+id/iv_main_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/tv_main_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceListItem"
+            tools:text="9.9"
+            />
+        <ImageView
+            android:id="@+id/iv_main_like_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star_border_black_18dp"
+            />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
