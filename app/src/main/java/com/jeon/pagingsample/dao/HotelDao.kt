@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.jeon.pagingsample.data.Hotel
+import com.jeon.pagingsample.data.entity.Hotel
 
 @Dao
 interface HotelDao {

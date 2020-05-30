@@ -1,4 +1,4 @@
-package com.jeon.pagingsample.data
+package com.jeon.pagingsample.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -34,7 +34,13 @@ dependencies {
     def coroutines_version = '1.3.2'
     def lifecycle_version = '2.2.0'
     def room_version = "2.2.5"
+    def paging_version = "2.1.2"
 
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    testImplementation "androidx.paging:paging-common:$paging_version" 
+
+    // optional - RxJava support
+    implementation "androidx.paging:paging-rxjava2:$paging_version" // For Kotlin use paging-rxjava2-ktx
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -55,6 +61,7 @@ dependencies {
         exclude module: 'okhttp'
     }
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_converter_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
     // coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
