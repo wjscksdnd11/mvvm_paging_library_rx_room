@@ -25,7 +25,8 @@ data class Hotel(
     @ColumnInfo(name = "thumbnail") val thumbnail: String = "",
     @ColumnInfo(name = "subject") val subject: String = "",
     @ColumnInfo(name = "price") val price: Double = 0.0,
-    @ColumnInfo(name = "rate") val rate: Double = 0.0
+    @ColumnInfo(name = "rate") val rate: Double = 0.0,
+    @ColumnInfo(name = "timemillis") val timemillis: Long
 )
 
 
@@ -38,5 +39,6 @@ fun Hotel.toHotelItem():HotelItem{
         thumbnail = thumbnail ,
         rate =rate ,
         name = name,
-        id =id.toInt())
+        id =id.toInt(),
+        timemillis = timemillis)
 }

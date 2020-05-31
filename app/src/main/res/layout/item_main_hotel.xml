@@ -3,9 +3,10 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/userContainer"
-    android:foreground="?attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:foreground="?attr/selectableItemBackground"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true">
@@ -13,12 +14,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="17dp">
 
         <TextView
             android:id="@+id/tv_main_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="17dp"
             android:textColor="?attr/textDefaultColor"
             android:textSize="20sp"
             tools:text="내 집 같은 편안한 여기어때 숙소" />
@@ -44,28 +47,38 @@
                 android:layout_height="40dp"
                 android:maxWidth="40dp"
                 android:src="@drawable/ic_star_border_black_18dp" />
+
             <TextView
                 android:id="@+id/tv_main_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="70dp"
                 android:layout_marginStart="10dp"
+                android:maxWidth="70dp"
                 android:textAppearance="?android:textAppearanceListItem"
                 android:textSize="20sp"
                 tools:text="10.9점" />
 
             <TextView
-                android:gravity="end"
-
                 android:id="@+id/tv_main_price"
-                android:layout_weight="1"
+
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:layout_weight="1"
+                android:gravity="end"
                 android:textColor="?attr/textDefaultColor"
+                android:textSize="20sp"
                 tools:text="150,000" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_main_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textColor="?attr/textDefaultColor"
+            android:textSize="20sp"
+            tools:text="2020/05/20" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

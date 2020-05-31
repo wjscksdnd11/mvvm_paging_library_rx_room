@@ -56,7 +56,7 @@ class HotelRepository private constructor(
 
     fun getLiekedHotelList(sort: SORT, value: FIELD): LiveData<PagedList<HotelItem>> {
         return sourceDao?.getDataSource()
-            ?.map { it.toHotelItem() }
+            ?.map { it.toHotelItem().also { item->item.isLike=true } }
             ?.mapByPage {
                 if (sort == SORT.ASC) {
                     if(value==FIELD.RATE)

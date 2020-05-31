@@ -9,7 +9,7 @@ data class HotelItem(
     val name: String,
     val rate: Double,
     val thumbnail: String,
-    val timemillis:Long? = null,
+    val timemillis:Long =0,
     var isLike:Boolean = false
 ): Serializable
 
@@ -27,5 +27,6 @@ fun HotelItem.toHotealDao(): Hotel {
         imagePath = description.imagePath,
         name = name,
         rate = rate,
-        thumbnail = thumbnail)
+        thumbnail = thumbnail,
+        timemillis = System.currentTimeMillis())
 }

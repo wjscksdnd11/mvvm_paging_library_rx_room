@@ -13,6 +13,7 @@ import com.jeon.pagingsample.R
 import com.jeon.pagingsample.data.HotelItem
 import com.jeon.pagingsample.data.NetworkState
 import com.jeon.pagingsample.data.Status
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.item_footer_loading.*
 
@@ -27,6 +28,9 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity?.also {
@@ -42,25 +46,22 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun observe(){
-        with(viewModel){
-            hotelList.observe(this@MainFragment, Observer<PagedList<HotelItem>> {pagedList->
+
+    fun observe() {
+        with(viewModel) {
+            likeList.observe(this@MainFragment, Observer {  })
+            hotelList.observe(this@MainFragment, Observer<PagedList<HotelItem>> { pagedList ->
                 hotelAdapter.submitList(pagedList)
             })
             getNetworkState()
-                .observe(this@MainFragment, Observer<NetworkState> {networkState->
+                .observe(this@MainFragment, Observer<NetworkState> { networkState ->
                     hotelAdapter.setNetworkState(networkState)
                 })
             getRefreshState().observe(this@MainFragment, Observer { networkState ->
-                if (hotelAdapter.currentList != null) {
-                    if (hotelAdapter.currentList!!.size > 0) {
-                        refresh.isRefreshing = networkState?.status == NetworkState.LOADING.status
-                    } else {
-                        setInitialLoadingState(networkState)
-                    }
-                } else {
-                    setInitialLoadingState(networkState)
+                if (hotelAdapter.currentList.isNullOrEmpty().not()) {
+                    refresh.isRefreshing = networkState?.status == NetworkState.LOADING.status
                 }
+                setInitialLoadingState(networkState)
             })
         }
 

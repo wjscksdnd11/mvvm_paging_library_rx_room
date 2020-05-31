@@ -6,4 +6,10 @@
     <string name="main_tab_list">리스트</string>
     <string name="main_tab_like">즐겨찾기</string>
     <string name="item_footer_retry_str">retry</string>
+    <string name="add_like">즐겨찾기 추가되었습니다.</string>
+    <string name="remove_unlike">즐겨찾기 해제되었습니다.</string>
+    <string name="desc_str">내림차순</string>
+    <string name="asc_str">오름차순</string>
+    <string name="rate_sort_str">평점순</string>
+    <string name="register_sort_str">등록순</string>
 </resources>

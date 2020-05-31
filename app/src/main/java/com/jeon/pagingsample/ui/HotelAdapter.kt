@@ -3,6 +3,7 @@ package com.jeon.pagingsample.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -12,10 +13,12 @@ import com.jeon.pagingsample.R
 import com.jeon.pagingsample.data.HotelItem
 import com.jeon.pagingsample.data.NetworkState
 import com.jeon.pagingsample.data.Status
+import com.jeon.pagingsample.getTimeFormat
 import kotlinx.android.synthetic.main.item_footer_loading.view.*
 import kotlinx.android.synthetic.main.item_main_hotel.view.*
+import java.sql.Date
 
-class HotelAdapter (private val viewModel:HotelViewModel):PagedListAdapter<HotelItem, RecyclerView.ViewHolder>(diffCallback){
+class HotelAdapter (private val viewModel:HotelViewModel,val isDateVisible:Boolean = false ):PagedListAdapter<HotelItem, RecyclerView.ViewHolder>(diffCallback){
 
 
     private var networkState: NetworkState? = null
@@ -45,7 +48,7 @@ class HotelAdapter (private val viewModel:HotelViewModel):PagedListAdapter<Hotel
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
-            ITEM_VIEW_TYPE->(holder as HotelViewHolder).bind(getItem(position))
+            ITEM_VIEW_TYPE->(holder as HotelViewHolder).bind(getItem(position),isDateVisible)
             LOADING_VIEW_TYPE->(holder as LoadingViewHolder).bind(networkState)
         }
     }
@@ -65,16 +68,28 @@ class HotelAdapter (private val viewModel:HotelViewModel):PagedListAdapter<Hotel
 
     class HotelViewHolder(view: View, private val viewModel: HotelViewModel) : RecyclerView.ViewHolder(view) {
 
-        fun bind(hotelItem: HotelItem?) {
-            itemView.setOnClickListener { viewModel.moveDetail() }
+        fun bind(hotelItem: HotelItem?,isDateVisible: Boolean) {
+            itemView.setOnClickListener { hotelItem?.id?.let { it1 -> viewModel.moveDetail(it1) } }
 
             hotelItem?.apply {
+
+                if(isDateVisible){
+                    itemView.tv_main_date.visibility = View.VISIBLE
+                    itemView.tv_main_date.text = getTimeFormat(timemillis)
+                }else{
+                    itemView.tv_main_date.visibility = View.GONE
+                }
+
                 itemView.iv_main_like_toggle.setOnClickListener {
                     isLike = !isLike
-                    if(isLike)
+                    if(isLike) {
                         viewModel.like(adapterPosition)
-                    else
+                        Toast.makeText(itemView.context,itemView.context.getString(R.string.add_like),Toast.LENGTH_SHORT).show()
+                    }else {
                         viewModel.unlike(adapterPosition)
+                        Toast.makeText(itemView.context,itemView.context.getString(R.string.remove_unlike),Toast.LENGTH_SHORT).show()
+                    }
+                    setRateView(isLike)
                 }
                 setRateView(isLike)
                 setTextViews(this)

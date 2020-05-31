@@ -9,20 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.RecyclerView
 import com.jeon.pagingsample.R
 import com.jeon.pagingsample.data.HotelItem
-import com.jeon.pagingsample.data.NetworkState
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class LikeFragment : Fragment() {
     private lateinit var viewModel: HotelViewModel
     private lateinit var hotelAdapter: HotelAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -31,7 +25,7 @@ class LikeFragment : Fragment() {
                 it.viewModelStore,
                 ViewModelFactory(it.application)
             ).get(HotelViewModel::class.java)
-            hotelAdapter = HotelAdapter(viewModel)
+            hotelAdapter = HotelAdapter(viewModel,true)
             observe()
             recycler.adapter = hotelAdapter
             recycler.itemAnimator = DefaultItemAnimator()
