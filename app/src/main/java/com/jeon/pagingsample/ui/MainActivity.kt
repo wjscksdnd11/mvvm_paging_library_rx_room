@@ -1,17 +1,15 @@
 package com.jeon.pagingsample.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.jeon.pagingsample.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         bottom_navigation.setOnNavigationItemReselectedListener { item ->
             when(item.itemId) {
@@ -31,7 +29,6 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.container, fragment)
             commit()
         }
-
     }
 
 

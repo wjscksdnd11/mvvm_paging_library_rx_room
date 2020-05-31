@@ -13,7 +13,7 @@ import retrofit2.http.Query
 interface HotelService {
 
     @GET("App/json/{path}.json")
-    fun getHotels(@Path("path") page: Long): Single<List<HotelDto>>
+    fun getHotels(@Path("path") page: Long): Single<HotelDto>
 
     companion object {
         fun getService(): HotelService {

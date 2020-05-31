@@ -1,5 +1,6 @@
 package com.jeon.pagingsample.data.dto
 
+import com.jeon.pagingsample.data.HotelItem
 import java.io.Serializable
 
 data class HotelDto(
@@ -26,3 +27,10 @@ data class Description(
     val price: Int,
     val subject: String
 ):Serializable
+
+fun Description.toHotelDescritipn():com.jeon.pagingsample.data.Description{
+    return com.jeon.pagingsample.data.Description(imagePath, price, subject)
+}
+fun Product.toHotelItem():HotelItem{
+    return HotelItem(description = description.toHotelDescritipn(),id = id,name = name,rate = rate,thumbnail = thumbnail)
+}
