@@ -1,5 +1,6 @@
-package com.jeon.pagingsample.dao
+package com.jeon.pagingsample.data.dao
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +10,7 @@ import com.jeon.pagingsample.data.entity.Hotel
 @Dao
 interface HotelDao {
     @Query("SELECT * FROM hotel")
-    fun getAll(): List<Hotel>
+    fun getAll(): DataSource.Factory<Long,Hotel>
 
     @Query("SELECT * FROM user WHERE uid IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<Hotel>

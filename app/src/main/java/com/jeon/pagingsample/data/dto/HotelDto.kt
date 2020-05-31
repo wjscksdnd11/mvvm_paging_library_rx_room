@@ -28,8 +28,8 @@ data class Description(
     val subject: String
 ):Serializable
 
-fun Description.toHotelDescritipn():com.jeon.pagingsample.data.Description{
-    return com.jeon.pagingsample.data.Description(imagePath, price, subject)
+fun Description.toHotelDescritipn():com.jeon.pagingsample.data.DescItem{
+    return com.jeon.pagingsample.data.DescItem(imagePath, price, subject)
 }
 fun Product.toHotelItem():HotelItem{
     return HotelItem(description = description.toHotelDescritipn(),id = id,name = name,rate = rate,thumbnail = thumbnail)

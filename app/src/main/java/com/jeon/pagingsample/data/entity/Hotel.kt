@@ -3,6 +3,8 @@ package com.jeon.pagingsample.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.jeon.pagingsample.data.DescItem
+import com.jeon.pagingsample.data.HotelItem
 
 /**
  *   "id": 1001,
@@ -18,9 +20,23 @@ import androidx.room.PrimaryKey
 @Entity
 data class Hotel(
     @PrimaryKey val id: String,
-    @ColumnInfo(name = "name") val name: String?,
-    @ColumnInfo(name = "image_path") val imagePath: String?,
-    @ColumnInfo(name = "thumbnail") val thumbnail: String?,
-    @ColumnInfo(name = "subject") val subject: String?,
-    @ColumnInfo(name = "price") val price: Double?
+    @ColumnInfo(name = "name") val name: String = "",
+    @ColumnInfo(name = "image_path") val imagePath: String = "",
+    @ColumnInfo(name = "thumbnail") val thumbnail: String = "",
+    @ColumnInfo(name = "subject") val subject: String = "",
+    @ColumnInfo(name = "price") val price: Double = 0.0,
+    @ColumnInfo(name = "rate") val rate: Double = 0.0
 )
+
+
+
+fun Hotel.toHotelItem():HotelItem{
+    return HotelItem(description =
+    DescItem(imagePath = imagePath,
+        price = price.toInt(),
+        subject = subject),
+        thumbnail = thumbnail ,
+        rate =rate ,
+        name = name,
+        id =id.toInt())
+}
