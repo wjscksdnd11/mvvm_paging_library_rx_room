@@ -3,6 +3,7 @@ package com.jeon.pagingsample.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import com.jeon.pagingsample.data.Status
 import kotlinx.android.synthetic.main.item_footer_loading.view.*
 import kotlinx.android.synthetic.main.item_main_hotel.view.*
 
-class HotelAdapter (private val retryCallback:()->Unit):PagedListAdapter<HotelItem, RecyclerView.ViewHolder>(diffCallback){
+class HotelAdapter (private val viewModel:HotelViewModel):PagedListAdapter<HotelItem, RecyclerView.ViewHolder>(diffCallback){
 
 
     private var networkState: NetworkState? = null
@@ -36,8 +37,8 @@ class HotelAdapter (private val retryCallback:()->Unit):PagedListAdapter<HotelIt
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            ITEM_VIEW_TYPE->{ HotelViewHolder.create(parent)}
-            LOADING_VIEW_TYPE->{LoadingViewHolder.create(parent, retryCallback)}
+            ITEM_VIEW_TYPE->{ HotelViewHolder.create(parent,viewModel)}
+            LOADING_VIEW_TYPE->{LoadingViewHolder.create(parent, viewModel)}
             else -> throw IllegalArgumentException("unknown view type")
         }
     }
@@ -62,29 +63,61 @@ class HotelAdapter (private val retryCallback:()->Unit):PagedListAdapter<HotelIt
         return networkState != null && networkState != NetworkState.LOADED
     }
 
-    class HotelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class HotelViewHolder(view: View, private val viewModel: HotelViewModel) : RecyclerView.ViewHolder(view) {
 
         fun bind(hotelItem: HotelItem?) {
-            hotelItem?.also {
+            itemView.setOnClickListener { viewModel.moveDetail() }
+
+            hotelItem?.apply {
+                itemView.iv_main_like_toggle.setOnClickListener {
+                    isLike = !isLike
+                    if(isLike)
+                        viewModel.like(adapterPosition)
+                    else
+                        viewModel.unlike(adapterPosition)
+                }
+                setRateView(isLike)
+                setTextViews(this)
                 Glide.with(itemView.context)
-                    .load(it.thumbnail)
+                    .load(thumbnail)
                     .placeholder(R.mipmap.ic_launcher)
                     .into(itemView.iv_main_thumbnail)
             }
         }
 
+        private fun setTextViews(item:HotelItem){
+            with(itemView){
+                tv_main_name.text = item.name
+                tv_main_price.text = String.format("%,d",item.description.price)
+                if(item.rate>0)
+                    tv_main_rate.text = item.rate.toString()
+            }
+        }
+
+        private fun setRateView(isLike:Boolean){
+            val rateDrawableId = if(isLike){
+                R.drawable.ic_star_rate_black_18dp
+            }else{
+                R.drawable.ic_star_border_black_18dp
+            }
+            itemView.iv_main_like_toggle.setImageDrawable(ContextCompat.getDrawable(itemView.context,rateDrawableId))
+
+        }
+
+
+
         companion object {
-            fun create(parent: ViewGroup): HotelViewHolder {
+            fun create(parent: ViewGroup, viewModel: HotelViewModel): HotelViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val view = layoutInflater.inflate(R.layout.item_main_hotel, parent, false)
-                return HotelViewHolder(view)
+                return HotelViewHolder(view, viewModel)
             }
         }
     }
-    class LoadingViewHolder(view: View,  private val retryCallback: () -> Unit) : RecyclerView.ViewHolder(view) {
+    class LoadingViewHolder(view: View, private val viewModel: HotelViewModel) : RecyclerView.ViewHolder(view) {
 
         init {
-            itemView.retryLoadingButton.setOnClickListener { retryCallback() }
+            itemView.retryLoadingButton.setOnClickListener { viewModel.retry() }
         }
 
         fun bind(networkState: NetworkState?) {
@@ -97,10 +130,10 @@ class HotelAdapter (private val retryCallback:()->Unit):PagedListAdapter<HotelIt
         }
 
         companion object {
-            fun create(parent: ViewGroup, retryCallback: () -> Unit): LoadingViewHolder {
+            fun create(parent: ViewGroup, viewModel: HotelViewModel): LoadingViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val view = layoutInflater.inflate(R.layout.item_footer_loading, parent, false)
-                return LoadingViewHolder(view, retryCallback)
+                return LoadingViewHolder(view, viewModel)
             }
         }
 

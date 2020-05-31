@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/userContainer"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,39 +17,55 @@
 
         <TextView
             android:id="@+id/tv_main_name"
-            android:textColor="?attr/textDefaultColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?attr/textDefaultColor"
             android:textSize="20sp"
-            tools:text="내 집 같은 편안한 여기어때 숙소"/>
+            tools:text="내 집 같은 편안한 여기어때 숙소" />
 
-        <TextView
-            android:id="@+id/tv_main_price"
-            android:textColor="?attr/textDefaultColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceListItem"
-            tools:text="150000"/>
 
         <ImageView
             android:id="@+id/iv_main_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:src = "@mipmap/ic_launcher"
-            />
-        <TextView
-            android:id="@+id/tv_main_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceListItem"
-            tools:text="9.9"
-            />
-        <ImageView
-            android:id="@+id/iv_main_like_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star_border_black_18dp"
-            />
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center|end"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_main_like_toggle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:maxWidth="40dp"
+                android:src="@drawable/ic_star_border_black_18dp" />
+            <TextView
+                android:id="@+id/tv_main_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="70dp"
+                android:layout_marginStart="10dp"
+                android:textAppearance="?android:textAppearanceListItem"
+                android:textSize="20sp"
+                tools:text="10.9점" />
+
+            <TextView
+                android:gravity="end"
+
+                android:id="@+id/tv_main_price"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="?attr/textDefaultColor"
+                tools:text="150,000" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class HotelDto(
     val code: Int,
-    val `data`: Data,
+    val `data`: Data?,
     val msg: String
 ):Serializable
 

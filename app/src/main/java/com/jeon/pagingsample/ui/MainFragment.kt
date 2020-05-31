@@ -29,33 +29,48 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this.viewModelStore, ViewModelFactory()).get(HotelViewModel::class.java)
-        hotelAdapter = HotelAdapter {
-            viewModel.retry()
+        activity?.also {
+            viewModel = ViewModelProvider(
+                it.viewModelStore,
+                ViewModelFactory(it.application)
+            ).get(HotelViewModel::class.java)
+            hotelAdapter = HotelAdapter(viewModel)
+            observe()
+            recycler.adapter = hotelAdapter
+            recycler.itemAnimator = DefaultItemAnimator()
+            refresh.setOnRefreshListener { viewModel.refresh() }
         }
-        recycler.adapter = hotelAdapter
-        recycler.itemAnimator= DefaultItemAnimator()
-        viewModel.hotelList.observe(this, Observer<PagedList<HotelItem>> {
-            hotelAdapter.submitList(it) })
-        viewModel.getNetworkState().observe(this, Observer<NetworkState> { hotelAdapter.setNetworkState(it) })
-        viewModel.getRefreshState().observe(this, Observer { networkState ->
-            if (hotelAdapter.currentList != null) {
-                if (hotelAdapter.currentList!!.size > 0) {
-                    refresh.isRefreshing = networkState?.status == NetworkState.LOADING.status
+    }
+
+    fun observe(){
+        with(viewModel){
+            hotelList.observe(this@MainFragment, Observer<PagedList<HotelItem>> {pagedList->
+                hotelAdapter.submitList(pagedList)
+            })
+            getNetworkState()
+                .observe(this@MainFragment, Observer<NetworkState> {networkState->
+                    hotelAdapter.setNetworkState(networkState)
+                })
+            getRefreshState().observe(this@MainFragment, Observer { networkState ->
+                if (hotelAdapter.currentList != null) {
+                    if (hotelAdapter.currentList!!.size > 0) {
+                        refresh.isRefreshing = networkState?.status == NetworkState.LOADING.status
+                    } else {
+                        setInitialLoadingState(networkState)
+                    }
                 } else {
                     setInitialLoadingState(networkState)
                 }
-            } else {
-                setInitialLoadingState(networkState)
-            }
-        })
-        refresh.setOnRefreshListener { viewModel.refresh() }
+            })
+        }
 
     }
 
     private fun setInitialLoadingState(networkState: NetworkState?) {
-        retryLoadingButton.visibility = if (networkState?.status == Status.FAILED) View.VISIBLE else View.GONE
-        loadingProgressBar.visibility = if (networkState?.status == Status.RUNNING) View.VISIBLE else View.GONE
+        retryLoadingButton.visibility =
+            if (networkState?.status == Status.FAILED) View.VISIBLE else View.GONE
+        loadingProgressBar.visibility =
+            if (networkState?.status == Status.RUNNING) View.VISIBLE else View.GONE
 
         refresh.isEnabled = networkState?.status == Status.SUCCESS
         retryLoadingButton.setOnClickListener { viewModel.retry() }

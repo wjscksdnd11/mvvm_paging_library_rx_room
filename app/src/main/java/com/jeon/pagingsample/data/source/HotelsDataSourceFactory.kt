@@ -6,7 +6,7 @@ import com.jeon.pagingsample.data.api.HotelService
 import com.jeon.pagingsample.data.dto.Product
 import io.reactivex.disposables.CompositeDisposable
 
-class HotelsDataSourceFactory(private val compositeDisposable: CompositeDisposable,val apiService: HotelService)
+class HotelsDataSourceFactory(private val compositeDisposable: CompositeDisposable, private val apiService: HotelService)
     : DataSource.Factory<Long, Product>() {
     val hotelsDataSourceLive = MutableLiveData<HotelDataSource>()
     override fun create(): DataSource<Long, Product> {
