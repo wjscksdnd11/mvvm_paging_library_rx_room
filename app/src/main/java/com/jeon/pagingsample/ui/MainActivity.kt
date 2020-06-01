@@ -49,10 +49,20 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(supportFragmentManager.backStackEntryCount==0){
+            bottom_navigation.visibility = View.VISIBLE
+        }
+    }
+
     private fun moveFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction().apply {
             if (fragment is DetailFragment){
                 addToBackStack("tag")
+                bottom_navigation.visibility = View.GONE
+            }else{
+                bottom_navigation.visibility = View.VISIBLE
             }
             replace(R.id.container, fragment)
             commit()
